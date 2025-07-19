@@ -16,5 +16,6 @@ which took it from http://dl.maptools.org/dl/shapelib/shape_eg_data.zip
 
 ## Limitations
 
+- Only reads SHP and DBF files
 - Reads data into memory, you may have issues with larger data sets
 - DBF reader is not thuroughly tested, only supports a subste of column types
