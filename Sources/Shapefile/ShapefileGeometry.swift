@@ -50,20 +50,20 @@ public enum PartType : Int {
 }
 
 public struct BoundingBox {
-  var minX: Double
-  var minY: Double
-  var maxX: Double
-  var maxY: Double
+  public var minX: Double
+  public var minY: Double
+  public var maxX: Double
+  public var maxY: Double
 }
 
 public struct ZRange {
-  var minZ: Double
-  var maxZ: Double
+  public var minZ: Double
+  public var maxZ: Double
 }
 
 public struct MRange {
-  var minM: Double
-  var maxM: Double
+  public var minM: Double
+  public var maxM: Double
 }
 
 public struct ShapeFileHeader {
@@ -80,26 +80,26 @@ public struct ShapeRecordHeader {
   public var recordLength: Int
 }
 
-struct Point2d {
-  var x: Double
-  var y: Double
+public struct Point2d {
+  public var x: Double
+  public var y: Double
 }
-struct Point2dm {
-  var x: Double
-  var y: Double
-  var m: Double
+public struct Point2dm {
+  public var x: Double
+  public var y: Double
+  public var m: Double
 }
 
-struct Point3d {
-  var x: Double
-  var y: Double
-  var z: Double
-  var m: Double
+public struct Point3d {
+  public var x: Double
+  public var y: Double
+  public var z: Double
+  public var m: Double
 }
 
 
 public class Shape {
-  var type: ShapeType
+  public var type: ShapeType
 
   init(type: ShapeType) {
     self.type = type
@@ -113,7 +113,7 @@ public class NullShape : Shape {
 }
 
 public class Point : Shape {
-  var point: Point2d
+  public var point: Point2d
   init(point: Point2d) {
     self.point = point
     super.init(type: .point)
@@ -121,8 +121,8 @@ public class Point : Shape {
 }
 
 public class MultiPoint : Shape {
-  var box: BoundingBox
-  var points: [Point2d] = []
+  public var box: BoundingBox
+  public var points: [Point2d] = []
   init(bounds: BoundingBox) {
     box = bounds
     super.init(type: .multipoint)
@@ -130,8 +130,8 @@ public class MultiPoint : Shape {
 }
 
 public class Polyline : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
+  public var box: BoundingBox
+  public var parts: [Int] = []
   var points: [Point2d] = []
   init(bounds: BoundingBox) {
     box = bounds
@@ -140,9 +140,9 @@ public class Polyline : Shape {
 }
 
 public class Polygon : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
-  var points: [Point2d] = []
+  public var box: BoundingBox
+  public var parts: [Int] = []
+  public var points: [Point2d] = []
   init(bounds: BoundingBox) {
     box = bounds
     super.init(type: .polygon)
@@ -150,7 +150,7 @@ public class Polygon : Shape {
 }
 
 public class PointM : Shape {
-  var point: Point2dm
+  public var point: Point2dm
   init(point: Point2dm) {
     self.point = point
     super.init(type: .pointM)
@@ -158,9 +158,9 @@ public class PointM : Shape {
 }
 
 public class MultiPointM : Shape {
-  var box: BoundingBox
-  var measurmentRange: MRange
-  var points: [Point2dm] = []
+  public var box: BoundingBox
+  public var measurmentRange: MRange
+  public var points: [Point2dm] = []
   init(bounds: BoundingBox, measurmentRange: MRange) {
     self.box = bounds
     self.measurmentRange = measurmentRange
@@ -169,10 +169,10 @@ public class MultiPointM : Shape {
 }
 
 public class PolylineM : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
-  var points: [Point2dm] = []
-  var measurmentRange: MRange
+  public var box: BoundingBox
+  public var parts: [Int] = []
+  public var points: [Point2dm] = []
+  public var measurmentRange: MRange
   init(bounds: BoundingBox, measurmentRange: MRange) {
     self.box = bounds
     self.measurmentRange = measurmentRange
@@ -183,10 +183,10 @@ public class PolylineM : Shape {
 }
 
 public class PolygonM : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
-  var points: [Point2dm] = []
-  var measurmentRange: MRange
+  public var box: BoundingBox
+  public var parts: [Int] = []
+  public var points: [Point2dm] = []
+  public var measurmentRange: MRange
 
   init(bounds: BoundingBox, measurmentRange: MRange) {
     self.box = bounds
@@ -196,7 +196,7 @@ public class PolygonM : Shape {
 }
 
 public class PointZ : Shape {
-  var point: Point3d
+  public var point: Point3d
   init(point: Point3d) {
     self.point = point
     super.init(type: .pointZ)
@@ -204,10 +204,10 @@ public class PointZ : Shape {
 }
 
 public class MultiPointZ : Shape {
-  var box: BoundingBox
-  var points: [Point3d] = []
-  var zRange: ZRange
-  var measurmentRange: MRange
+  public var box: BoundingBox
+  public var points: [Point3d] = []
+  public var zRange: ZRange
+  public var measurmentRange: MRange
   init(bounds: BoundingBox, zRange: ZRange, measurmentRange: MRange) {
     self.box = bounds
     self.zRange = zRange
@@ -217,11 +217,11 @@ public class MultiPointZ : Shape {
 }
 
 public class PolylineZ : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
-  var points: [Point3d] = []
-  var zRange: ZRange
-  var measurmentRange: MRange
+  public var box: BoundingBox
+  public var parts: [Int] = []
+  public var points: [Point3d] = []
+  public var zRange: ZRange
+  public var measurmentRange: MRange
   init(bounds: BoundingBox, zRange: ZRange, measurmentRange: MRange) {
     self.box = bounds
     self.zRange = zRange
@@ -231,11 +231,11 @@ public class PolylineZ : Shape {
 }
 
 public class PolygonZ : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
-  var points: [Point3d] = []
-  var zRange: ZRange
-  var measurmentRange: MRange
+  public var box: BoundingBox
+  public var parts: [Int] = []
+  public var points: [Point3d] = []
+  public var zRange: ZRange
+  public var measurmentRange: MRange
 
   init(bounds: BoundingBox, zRange: ZRange, measurmentRange: MRange) {
     self.box = bounds
@@ -246,12 +246,12 @@ public class PolygonZ : Shape {
 }
 
 public class Multipatch : Shape {
-  var box: BoundingBox
-  var parts: [Int] = []
-  var partTypes: [PartType] = []
-  var points: [Point3d] = []
-  var zRange: ZRange
-  var measurmentRange: MRange
+  public var box: BoundingBox
+  public var parts: [Int] = []
+  public var partTypes: [PartType] = []
+  public var points: [Point3d] = []
+  public var zRange: ZRange
+  public var measurmentRange: MRange
 
   init(bounds: BoundingBox, zRange: ZRange, measurmentRange: MRange) {
     self.box = bounds
