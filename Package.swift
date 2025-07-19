@@ -5,22 +5,40 @@ import PackageDescription
 
 let package = Package(
     name: "swift-shapefile",
+    platforms: [
+        .macOS(.v15)
+    ],
+
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "swift-shapefile",
-            targets: ["swift-shapefile"]
+            targets: ["Shapefile"]
         ),
+    ],
+    dependencies: [
+      .package(url: "https://github.com/apple/swift-binary-parsing.git", .upToNextMinor(from: "0.0.1")),
+      .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "swift-shapefile"
+            name: "Shapefile",
+            dependencies: [
+              .product(name: "BinaryParsing", package: "swift-binary-parsing"),
+            ]
         ),
+
         .testTarget(
-            name: "swift-shapefileTests",
-            dependencies: ["swift-shapefile"]
+            name: "ShapefileTests",
+            dependencies: [
+              "Shapefile",
+              .product(name: "Numerics", package: "swift-numerics"),
+            ],
+            resources: [
+                .copy("TestData"),
+            ],
         ),
     ]
 )
