@@ -17,7 +17,9 @@
 //
 
 import Foundation
-
+public enum ShapefileError : Error {
+  case inconsistentRecordCount(Int, Int)
+}
 public struct Shapefile {
   public var dbf: DBF
   public var geo: ShapeFileGeometry
@@ -35,5 +37,8 @@ public struct Shapefile {
 
     let geoData = try Data(contentsOf: geoURL)
     self.geo = try ShapeFileGeometry(parsing: geoData)
+    guard dbf.records.count == geo.records.count else {
+      throw ShapefileError.inconsistentRecordCount(dbf.records.count, geo.records.count)
+    }
   }
 }
