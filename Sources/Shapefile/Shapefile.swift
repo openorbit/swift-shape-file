@@ -22,35 +22,35 @@ public enum ShapefileError : Error {
 }
 public struct Shapefile {
   public var dbf: DBF
-  public var geo: ShapeFileGeometry
+  public var shp: ShapeFileGeometry
 
   public init(url: URL) throws {
     let dbfURL = url.appendingPathExtension("dbf")
-    let geoURL = url.appendingPathExtension("shp")
-    try self.init(dbfURL: dbfURL, geoURL: geoURL)
+    let shpURL = url.appendingPathExtension("shp")
+    try self.init(dbfURL: dbfURL, shpURL: shpURL)
   }
 
-  init(dbfURL: URL, geoURL: URL) throws
+  init(dbfURL: URL, shpURL: URL) throws
   {
     let dbfData = try Data(contentsOf: dbfURL)
     self.dbf = try DBF(parsing: dbfData)
 
-    let geoData = try Data(contentsOf: geoURL)
-    self.geo = try ShapeFileGeometry(parsing: geoData)
-    guard dbf.records.count == geo.records.count else {
-      throw ShapefileError.inconsistentRecordCount(dbf.records.count, geo.records.count)
+    let geoData = try Data(contentsOf: shpURL)
+    self.shp = try ShapeFileGeometry(parsing: geoData)
+    guard dbf.records.count == shp.records.count else {
+      throw ShapefileError.inconsistentRecordCount(dbf.records.count, shp.records.count)
     }
   }
 
   var count : Int {
     get {
-      return geo.records.count
+      return shp.records.count
     }
   }
 
   subscript (index: Int) -> (Shape, [String : DBF.RecordValue]) {
     get {
-      (geo.records[index], dbf.row(index))
+      (shp.records[index], dbf.row(index))
     }
   }
 }

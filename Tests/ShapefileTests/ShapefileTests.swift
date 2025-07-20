@@ -15,16 +15,16 @@ import Numerics
 
     let shape = try Shapefile(url: baseURL)
 
-    #expect(shape.geo.header.boundingBox.minX == 471276.28125)
-    #expect(shape.geo.header.boundingBox.minY == 4751595.5)
-    #expect(shape.geo.header.boundingBox.maxX.isApproximatelyEqual(to: 492683.536178589))
-    #expect(shape.geo.header.boundingBox.maxY.isApproximatelyEqual(to: 4765390.41258159))
-    #expect(shape.geo.header.shapeType == .polygon)
-    
-    #expect(shape.geo.records.count == 201)
-    
-    #expect(shape.geo.records[0].type == .polygon)
-    let poly = shape.geo.records[0] as! Polygon
+    #expect(shape.shp.header.boundingBox.minX == 471276.28125)
+    #expect(shape.shp.header.boundingBox.minY == 4751595.5)
+    #expect(shape.shp.header.boundingBox.maxX.isApproximatelyEqual(to: 492683.536178589))
+    #expect(shape.shp.header.boundingBox.maxY.isApproximatelyEqual(to: 4765390.41258159))
+    #expect(shape.shp.header.shapeType == .polygon)
+
+    #expect(shape.shp.records.count == 201)
+
+    #expect(shape.shp.records[0].type == .polygon)
+    let poly = shape.shp.records[0] as! Polygon
     #expect(poly.parts.count == 1)
     #expect(poly.points.count == 5)
     #expect(poly.points[0].x.isApproximatelyEqual(to: 486089.53125))
@@ -56,14 +56,14 @@ import Numerics
   @Test func pline() async throws {
     let (shp, dbf) = testDataURL(name: "TestData/shape_eg_data/pline")
     
-    let shape = try Shapefile(dbfURL: dbf, geoURL: shp)
+    let shape = try Shapefile(dbfURL: dbf, shpURL: shp)
 
-    #expect(shape.geo.header.boundingBox.minX.isApproximatelyEqual(to: 1296367.5))
-    #expect(shape.geo.header.boundingBox.minY.isApproximatelyEqual(to: 228199.390625))
-    #expect(shape.geo.header.boundingBox.maxX.isApproximatelyEqual(to: 1302699.0))
-    #expect(shape.geo.header.boundingBox.maxY.isApproximatelyEqual(to: 237185.03125))
-    #expect(shape.geo.header.shapeType == .polyline)
-    
+    #expect(shape.shp.header.boundingBox.minX.isApproximatelyEqual(to: 1296367.5))
+    #expect(shape.shp.header.boundingBox.minY.isApproximatelyEqual(to: 228199.390625))
+    #expect(shape.shp.header.boundingBox.maxX.isApproximatelyEqual(to: 1302699.0))
+    #expect(shape.shp.header.boundingBox.maxY.isApproximatelyEqual(to: 237185.03125))
+    #expect(shape.shp.header.shapeType == .polyline)
+
     #expect(shape.dbf.records.count == 460)
     
     let cols = shape.dbf.fields
@@ -80,13 +80,13 @@ import Numerics
   @Test func polygon() async throws {
     let (shp, dbf) = testDataURL(name: "TestData/shape_eg_data/polygon")
 
-    let shape = try Shapefile(dbfURL: dbf, geoURL: shp)
+    let shape = try Shapefile(dbfURL: dbf, shpURL: shp)
 
-    #expect(shape.geo.header.boundingBox.minX.isApproximatelyEqual(to: 471127.1875))
-    #expect(shape.geo.header.boundingBox.minY.isApproximatelyEqual(to: 4751545))
-    #expect(shape.geo.header.boundingBox.maxX.isApproximatelyEqual(to: 489292.3125))
-    #expect(shape.geo.header.boundingBox.maxY.isApproximatelyEqual(to: 4765610.5))
-    #expect(shape.geo.header.shapeType == .polygon)
+    #expect(shape.shp.header.boundingBox.minX.isApproximatelyEqual(to: 471127.1875))
+    #expect(shape.shp.header.boundingBox.minY.isApproximatelyEqual(to: 4751545))
+    #expect(shape.shp.header.boundingBox.maxX.isApproximatelyEqual(to: 489292.3125))
+    #expect(shape.shp.header.boundingBox.maxY.isApproximatelyEqual(to: 4765610.5))
+    #expect(shape.shp.header.shapeType == .polygon)
 
     #expect(shape.count == 474)
     #expect(shape.dbf.records.count == 474)
@@ -98,7 +98,7 @@ import Numerics
     #expect(lastShape.type == .polygon)
     #expect(lastRow["AA"] == .int(35044125))
 
-    let poly = shape.geo.records[0] as! Polygon
+    let poly = shape.shp.records[0] as! Polygon
     #expect(poly.box.minX.isApproximatelyEqual(to: 479647))
     #expect(poly.box.minY.isApproximatelyEqual(to: 4764856.5))
     #expect(poly.box.maxX.isApproximatelyEqual(to: 480389.6875))
@@ -154,5 +154,4 @@ import Numerics
     #expect(poly.points[19].y.isApproximatelyEqual(to: 4765180.5))
     
   }
-  
 }
