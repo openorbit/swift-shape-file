@@ -41,4 +41,16 @@ public struct Shapefile {
       throw ShapefileError.inconsistentRecordCount(dbf.records.count, geo.records.count)
     }
   }
+
+  var count : Int {
+    get {
+      return geo.records.count
+    }
+  }
+
+  subscript (index: Int) -> (Shape, [String : DBF.RecordValue]) {
+    get {
+      (geo.records[index], dbf.row(index))
+    }
+  }
 }

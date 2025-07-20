@@ -87,13 +87,15 @@ import Numerics
     #expect(shape.geo.header.boundingBox.maxX.isApproximatelyEqual(to: 489292.3125))
     #expect(shape.geo.header.boundingBox.maxY.isApproximatelyEqual(to: 4765610.5))
     #expect(shape.geo.header.shapeType == .polygon)
-    
+
+    #expect(shape.count == 474)
     #expect(shape.dbf.records.count == 474)
     
     let cols = shape.dbf.fields
     
     #expect(cols.count == 29)
-    let lastRow = shape.dbf.row(473)
+    let (lastShape, lastRow) = shape[473]
+    #expect(lastShape.type == .polygon)
     #expect(lastRow["AA"] == .int(35044125))
 
     let poly = shape.geo.records[0] as! Polygon
