@@ -21,10 +21,6 @@ import BinaryParsing
 extension Double {
   init(parsingLittleEndian input: inout ParserSpan) throws {
     let tmp = try UInt64(parsingLittleEndian: &input)
-    self = withUnsafePointer(to: tmp) { ptr in
-      let rawPtr = UnsafeRawPointer(ptr)
-      return rawPtr.load(as: Double.self)
-    }
+    self = Double(bitPattern: tmp)
   }
 }
-
